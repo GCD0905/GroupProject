@@ -91,31 +91,7 @@ class ProductController extends AbstractController
         }
         return $this->redirectToRoute('app_product_index'); //means 200, successful
     }
-//    /**
-//     * @Route("/sendmail", name="app_user_sendmail", methods={"GET"})
-//     */
-//    public function sendmail(Swift_Mailer $mailer): Response
-//    {
-//        $message = (new Swift_Message('Hello Email'))
-//            ->setFrom('ldd392002@gmail.com')
-//            ->setTo('duyle392002@gmail.com')
-//            ->setBody("3rd Test send email");
-//
-//        $mailer->send($message);
-//        return new Response("Send mail successfully");
-//    }
-//    /**
-//     * @Route("/reviewCart", name="app_review_cart", methods={"GET"})
-//     */
-//    public function reviewCart(Request $request, CartRepository $cartRepository): Response
-//    {
-//        $user= $this->getUser();
-//        $tempQuery = $cartRepository->reviewCart($user);
-//        return $this->render('cart/cart_review.html.twig', [
-//            'carts' =>  $tempQuery->getResult(),
-//
-//        ]);
-//    }
+
 
     /**
      * @Route("/reviewCart", name="app_review_cart", methods={"GET"})
@@ -294,5 +270,43 @@ class ProductController extends AbstractController
     }
 
 
+    public function show(Product $product): Response
+    {
+        return $this->render('product/show.html.twig', [
+            'product' => $product,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="app_product_edit", methods={"GET", "POST"})
+     */
+    public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
+    {
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $productRepository->add($product, true);
+
+            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('product/edit.html.twig', [
+            'product' => $product,
+            'form' => $form,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="app_product_delete", methods={"POST"})
+     */
+    public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->request->get('_token'))) {
+            $productRepository->remove($product, true);
+        }
+
+        return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+    }
 }
 
