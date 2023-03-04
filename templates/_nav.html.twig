@@ -1,0 +1,78 @@
+<div class="container">
+<div class="container.d-print-inline">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a href="{{ path('app_product_index') }}"
+           class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+            <img class="card-img-top" src="{{ asset('/images/haha.png' ) }} " height="70px" width="200px">
+            <span class="text-inline justify-content-center"></span>
+        </a>
+        <form class="m-auto" action={{ path('app_product_index') }} method="get">
+            <div class="input-group justify-content-center m-auto">
+                <button class="input-group-text pm-3 py-0" id="basic-addon1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="purple"
+                         class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
+                <input type="string" name="name" class="form-control"
+                       placeholder="Search Product" aria-label="Search"
+                       aria-describedby="search-addon"/>
+            </div>
+        </form>
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="{{ path('app_product_about') }}" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="{{ path('app_product_index') }}" class="nav-link">Products</a></li>
+            {% if app.user %}
+                <li class="nav-item"><a class="nav-link" href="{{ path('app_user_show', {'id': app.user.id}) }}">Hello {{ app.user.email }}</a></li>
+            {% endif %}
+            <li class="nav-item">
+                <a href="/{{ app.user ? 'logout' : 'login' }}" class="nav-link">
+                    {{ app.user ? 'Logout' : 'Login' }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('app_review_cart') }}" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-cart3" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+        {% if is_granted('ROLE_ADMIN') %}
+
+            <ul class="nav nav-pills">
+                <li class="nav-item"><p class="nav-link" style="color: purple;">Manage: </p>
+                </li>
+                <li class="nav-item">
+                    {% if app.request.get('_route') == 'app_user_index' %}
+                <li class="nav-item"><a href="{{ path('app_user_index') }}" class="nav-link active">User</a></li>
+                {% else %}
+                    <li class="nav-item"><a href="{{ path('app_user_index') }}" class="nav-link">User</a></li>
+                {% endif %}
+                </li>
+                <li class="nav-item">
+                    {% if app.request.get('_route') == 'app_product_manage' %}
+                <li class="nav-item"><a href="{{ path('app_product_manage') }}" class="nav-link active" >Product</a></li>
+            {% else %}
+                <li class="nav-item"><a href="{{ path('app_product_manage') }}" class="nav-link">Product</a></li>
+                {% endif %}
+                </li>
+{#                <li class="nav-item">#}
+{#                    {% if app.request.get('_route') == 'app_brand_index' %}#}
+{#                <li class="nav-item"><a href="{{ path('app_brand_index') }}" class="nav-link active"#}
+{#                                        style="color: white;">Brand</a></li>#}
+{#            {% else %}#}
+{#                <li class="nav-item"><a href="{{ path('app_brand_index') }}" class="nav-link" style="color: white;">Brand</a>#}
+{#                </li>#}
+{#                {% endif %}#}
+{#                </li>#}
+
+            </ul>
+
+
+        {% endif %}
+
+    </header>
+</div>
+</div>
