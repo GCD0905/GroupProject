@@ -1,0 +1,12 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+
+    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_user_show', {'id': user.id}) }}">Back To Profile</a>
+    {#    {{ include('user/_delete_form.html.twig') }}#}
+{% endblock %}

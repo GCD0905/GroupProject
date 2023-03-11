@@ -1,0 +1,19 @@
+
+<div class="container-md col-md-4 col-md-offset-4">
+    <h1>Edit User</h1>
+    {{ form_start(form,{'attr':{'class':'form-control'}}) }}
+    <label for="user_email" class="form-label">Email</label>
+    {{ form_widget(form.email,{'attr':{'class':'form-control rounded-pill'}}) }}
+    <label for="user_name" class="form-label">First name</label>
+    {{ form_widget(form.name,{'attr':{'class':'form-control rounded-pill'}}) }}
+    <label for="user_last_name" class="form-label">Last name</label>
+    {{ form_widget(form.last_name,{'attr':{'class':'form-control rounded-pill'}}) }}
+    <label for="user_password_first" class="form-label">Password</label>
+    {{ form_widget(form.password.first,{'attr':{'class':'form-control rounded-pill'}}) }}
+    <label for="user_password_second" class="form-label">Retype Password</label>
+    {{ form_widget(form.password.second,{'attr':{'class':'form-control rounded-pill'}}) }}
+    <br>
+    <button class="form-control rounded-pill btn btn-lg btn-primary border-bottom">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+</div>
+
